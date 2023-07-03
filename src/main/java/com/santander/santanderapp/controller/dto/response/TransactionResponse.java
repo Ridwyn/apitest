@@ -1,5 +1,6 @@
 package com.santander.santanderapp.controller.dto.response;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,5 +11,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TransactionResponse {
-    private  TransactionResponseData data;
+    @Valid
+    private TransactionResponseData data;
 }

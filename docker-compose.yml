@@ -1,0 +1,11 @@
+version: '3'
+services:
+  app:
+    container_name: santanderapp
+    build:
+      context: .
+      dockerfile: Dockerfile
+    working_dir: /usr/app
+    command: java -jar santanderapp-0.0.1-SNAPSHOT.jar
+    ports:
+      - 8080:8080

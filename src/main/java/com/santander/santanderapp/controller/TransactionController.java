@@ -1,14 +1,12 @@
 package com.santander.santanderapp.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.santander.santanderapp.controller.dto.request.TransactionRequestData;
 import com.santander.santanderapp.controller.dto.response.TransactionResponse;
 import com.santander.santanderapp.service.TransactionService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.concurrent.ExecutionException;
 
 @RestController
 public class TransactionController {
@@ -20,7 +18,7 @@ public class TransactionController {
 
     @ResponseStatus(HttpStatus.ACCEPTED)
     @PostMapping("/api/transaction")
-    public String executeTransaction(@RequestBody TransactionRequestData transactionRequestData) {
+    public String executeTransaction(@Valid @RequestBody TransactionRequestData transactionRequestData) {
 
         return transactionService.executeTransaction(transactionRequestData);
     }
