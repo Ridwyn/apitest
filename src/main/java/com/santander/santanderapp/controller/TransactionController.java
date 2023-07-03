@@ -17,20 +17,20 @@ public class TransactionController {
     }
 
     @ResponseStatus(HttpStatus.ACCEPTED)
-    @PostMapping("/api/transaction")
+    @PostMapping(value = "/api/transaction", produces = {"application/json"}, consumes = "application/json")
     public String executeTransaction(@Valid @RequestBody TransactionRequestData transactionRequestData) {
 
         return transactionService.executeTransaction(transactionRequestData);
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/api/transactions")
+    @GetMapping(value = "/api/transactions", produces = {"application/json"})
     public TransactionResponse retrieveAllTransactions() {
         return transactionService.getAllTransactions();
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/api/transactions/{senderId}")
+    @GetMapping(value = "/api/transactions/{senderId}", produces = {"application/json"})
     public TransactionResponse retrieveAllTransactionsBySender(@PathVariable("senderId") String senderId) {
         return transactionService.getAllTransactions(senderId);
     }

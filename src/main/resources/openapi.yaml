@@ -1,0 +1,126 @@
+---
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+  - url: http://localhost:8080
+    description: Transaction Service
+paths:
+  "/api/transaction":
+    post:
+      tags:
+        - transaction-controller
+      operationId: executeTransaction
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/TransactionRequestData"
+        required: true
+      responses:
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                type: string
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorDetails"
+  "/api/transactions":
+    get:
+      tags:
+        - transaction-controller
+      operationId: retrieveAllTransactions
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/TransactionResponse"
+  "/api/transactions/{senderId}":
+    get:
+      tags:
+        - transaction-controller
+      operationId: retrieveAllTransactionsBySender
+      parameters:
+        - name: senderId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/TransactionResponse"
+components:
+  schemas:
+    TransactionRequestData:
+      required:
+        - receiver
+        - sender
+      type: object
+      properties:
+        sender:
+          maxLength: 100
+          minLength: 10
+          type: string
+        receiver:
+          maxLength: 100
+          minLength: 10
+          type: string
+        amount:
+          minimum: 0
+          exclusiveMinimum: true
+          type: number
+    Transaction:
+      required:
+        - receiver
+        - sender
+      type: object
+      properties:
+        id:
+          type: string
+        sender:
+          maxLength: 100
+          minLength: 10
+          type: string
+        receiver:
+          maxLength: 100
+          minLength: 10
+          type: string
+        amount:
+          minimum: 0
+          exclusiveMinimum: true
+          type: number
+    TransactionResponse:
+      type: object
+      properties:
+        data:
+          "$ref": "#/components/schemas/TransactionResponseData"
+    TransactionResponseData:
+      type: object
+      properties:
+        transactions:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Transaction"
+    ErrorDetails:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: string
+        status:
+          type: string
+        message:
+          type: string
